@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import apiClient from 'panoptes-client/lib/api-client';
 import Translate from 'react-translate-component';
+
 import isAdmin from '../../lib/is-admin';
-import OrganizationPage from './organization-page';
 
 class OrganizationContainer extends React.Component {
   constructor() {
@@ -237,23 +237,22 @@ class OrganizationContainer extends React.Component {
 
   render() {
     if (this.state.organization && (this.state.organization.listed || isAdmin() || this.isCollaborator())) {
-      return (
-        <OrganizationPage
-          category={this.props.location && this.props.location.query && this.props.location.query.category}
-          collaborator={isAdmin() || this.isCollaborator()}
-          collaboratorView={this.state.collaboratorView}
-          errorFetchingProjects={this.state.errorFetchingProjects}
-          fetchingProjects={this.state.fetchingProjects}
-          onChangeQuery={this.updateQuery}
-          organization={this.state.organization}
-          organizationAvatar={this.state.organizationAvatar}
-          organizationBackground={this.state.organizationBackground}
-          organizationPages={this.state.organizationPages}
-          organizationProjects={this.state.organizationProjects}
-          projectAvatars={this.state.projectAvatars}
-          quoteObject={this.state.quoteObject}
-          toggleCollaboratorView={this.toggleCollaboratorView}
-        />);
+      return React.cloneElement(this.props.children, {
+        category: this.props.location && this.props.location.query && this.props.location.query.category,
+        collaborator: isAdmin() || this.isCollaborator(),
+        collaboratorView: this.state.collaboratorView,
+        errorFetchingProjects: this.state.errorFetchingProjects,
+        fetchingProjects: this.state.fetchingProjects,
+        onChangeQuery: this.updateQuery,
+        organization: this.state.organization,
+        organizationAvatar: this.state.organizationAvatar,
+        organizationBackground: this.state.organizationBackground,
+        organizationPages: this.state.organizationPages,
+        organizationProjects: this.state.organizationProjects,
+        projectAvatars: this.state.projectAvatars,
+        quoteObject: this.state.quoteObject,
+        toggleCollaboratorView: this.toggleCollaboratorView,
+      });
     } else if (this.state.fetchingOrganization) {
       return (
         <div className="content-container">

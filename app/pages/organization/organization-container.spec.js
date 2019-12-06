@@ -8,6 +8,7 @@ import sinon from 'sinon';
 import apiClient from 'panoptes-client/lib/api-client';
 import Translate from 'react-translate-component';
 import OrganizationContainer from './organization-container';
+import OrganizationPage from './organization-page';
 import mockPanoptesResource from '../../../test/mock-panoptes-resource';
 
 const params = {
@@ -59,7 +60,7 @@ describe('OrganizationContainer', function () {
   let wrapper;
 
   beforeEach(function () {
-    wrapper = shallow(<OrganizationContainer params={params} />, { context: { router: {}}});
+    wrapper = shallow(<OrganizationContainer params={params}><OrganizationPage /></OrganizationContainer>, { context: { router: {}}});
   });
 
   it('should render without crashing', function () {
